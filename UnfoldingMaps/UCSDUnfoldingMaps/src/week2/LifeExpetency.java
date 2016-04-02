@@ -11,7 +11,12 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
-
+/**
+ * My implementation of the example being explained in coursera.
+ * 
+ * @author praveen
+ *
+ */
 public class LifeExpetency extends PApplet{
 	
 	UnfoldingMap map;
@@ -44,6 +49,11 @@ public class LifeExpetency extends PApplet{
 	 map.draw();
 	}
 	
+	/**
+	 * This will retrieve and store the country name and life expectancy as a map 
+	 * @param fileName : the file which stores data
+	 * @return {@link Map} Country and Life Expectancy.
+	 */
 	private Map<String,Float>
 		loadLifeExpectancy(String fileName){
 		
@@ -64,7 +74,9 @@ public class LifeExpetency extends PApplet{
 		
 	}
 	
-	
+	/**
+	 * for each marker that is for each country . We will shade the marker based on life expectancy.
+	 */
 	private void shadeCountries(){
 		
 		for(Marker marker :  countryMarkers){
@@ -72,7 +84,8 @@ public class LifeExpetency extends PApplet{
 			
 			if(lifeExpMap.containsKey(countryId)){
 				float lifeExp = lifeExpMap.get(countryId);
-				int colorLevel = (int) map(lifeExp,40,90,100,255);
+				//this will translate the life expectancy(40-90) to a color.
+				int colorLevel = (int) map(lifeExp,40,90,10,255);
 				marker.setColor(color(255-colorLevel,100,colorLevel));
 			}else{
 				marker.setColor(color(150,150,150));
