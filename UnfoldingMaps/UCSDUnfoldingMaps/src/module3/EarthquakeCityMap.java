@@ -40,6 +40,12 @@ public class EarthquakeCityMap extends PApplet {
 	// Less than this threshold is a minor earthquake
 	public static final float THRESHOLD_LIGHT = 4;
 
+	private static int lowQuakeCol = 0;
+
+	private static int medQuakeCol = 0;
+
+	private static int highQuakeCol = 0;
+
 	/** This is where to find the local tiles, for working without an Internet connection */
 	public static String mbTilesString = "blankLight-1-3.mbtiles";
 	
@@ -83,13 +89,45 @@ public class EarthquakeCityMap extends PApplet {
 	    	// PointFeatures also have a getLocation method
 	    }
 	    
+
 	    // Here is an example of how to use Processing's color method to generate 
-	    // an int that represents the color yellow.  
-	    int yellow = color(255, 255, 0);
+	    // an int that represents the color blue.  
+	    lowQuakeCol = color(0,0,255);
 	    
+	    // an int that represents the color yellow.  
+	    medQuakeCol = color(255, 255, 0);
+	    
+	    //an int that represents the color red
+	    highQuakeCol = color(255,0,0);
 	    //TODO: Add code here as appropriate
+	    
+	    for(PointFeature earthquake : earthquakes){
+	    	//create marker for every feature that is related to a earthquake
+	    	markers.add(createEarthQuakeMarker(earthquake));
+	    }
+	    
+	    //add markers to the map
+	    map.addMarkers(markers);
 	}
 		
+	private SimplePointMarker createEarthQuakeMarker(PointFeature earthquake) {
+		Object magObj = earthquake.getProperty("magnitude");
+    	float mag = Float.parseFloat(magObj.toString());
+    	SimplePointMarker quakeMarker = createMarker(earthquake);
+		if(mag<THRESHOLD_LIGHT){
+			quakeMarker.setColor(lowQuakeCol);
+			quakeMarker.setRadius(05);
+		}else if(mag>=THRESHOLD_LIGHT && mag<THRESHOLD_MODERATE){
+			quakeMarker.setColor(medQuakeCol);
+			quakeMarker.setRadius(10);
+		}else{
+			quakeMarker.setColor(highQuakeCol);
+			quakeMarker.setRadius(15);
+		}
+		return quakeMarker;
+		
+	}
+
 	// A suggested helper method that takes in an earthquake feature and 
 	// returns a SimplePointMarker for that earthquake
 	// TODO: Implement this method and call it from setUp, if it helps
@@ -111,6 +149,27 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
+		fill(255, 255, 255);
+		rect(30,50,120,200);
+		
+		fill(255,0,0);
+		ellipse(40, 95, 05, 05);
+		
+		fill(255, 255, 0);
+		ellipse(40, 145, 10, 10);
+		
+		fill(0,0,255);
+		ellipse(40, 195, 15, 15);
+		
+		fill(255, 0, 0);
+		textSize(12);
+		text("5.0+ magnitude",50,100);
+		
+		textSize(12);
+		text("4.0+ magnitude",50,150);
+		
+		textSize(12);
+		text("below 4",50,200);
 	
 	}
 }
