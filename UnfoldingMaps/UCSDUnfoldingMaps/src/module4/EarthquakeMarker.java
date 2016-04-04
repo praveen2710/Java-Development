@@ -34,7 +34,9 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	public static final float THRESHOLD_DEEP = 300;
 
 	// ADD constants for colors
-
+	private int RED ;
+	private int YELLOW ;
+	private int BLUE;
 	
 	// abstract method implemented in derived classes
 	public abstract void drawEarthquake(PGraphics pg, float x, float y);
@@ -57,7 +59,7 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	public void draw(PGraphics pg, float x, float y) {
 		// save previous styling
 		pg.pushStyle();
-			
+		
 		// determine color of marker from depth
 		colorDetermine(pg);
 		
@@ -77,7 +79,20 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// You might find the getters below helpful.
 	private void colorDetermine(PGraphics pg) {
 		//TODO: Implement this method
-	}
+		float quakeDept= getDepth();
+		
+		RED = pg.color(255, 0,0);
+		BLUE = pg.color(0, 0,255);
+		YELLOW = pg.color(255,255,0);
+		
+		if(quakeDept<THRESHOLD_INTERMEDIATE){
+			pg.fill(YELLOW);
+		}else if(quakeDept>=THRESHOLD_INTERMEDIATE && quakeDept<THRESHOLD_DEEP){
+			pg.fill(BLUE);
+		}else{
+			pg.fill(YELLOW);
+		}
+	}	
 	
 	
 	/*
