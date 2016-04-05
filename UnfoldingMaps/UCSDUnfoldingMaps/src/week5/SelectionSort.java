@@ -19,13 +19,17 @@ public class SelectionSort {
 				if(val[postionToSwapWith]> val[j]){
 					postionToSwapWith = j;
 				}
-			}
-			int temp;
-			temp = val[i];
-			val[i] = val[postionToSwapWith];
-			val[postionToSwapWith]=temp;
+			}		
+			swapIntegers(val,i,postionToSwapWith);
 		}
 		
+	}
+	
+	public static void swapIntegers(int[] val,int posToSwap,int posToSwapWith){
+		int temp;
+		temp = val[posToSwap];
+		val[posToSwap] = val[posToSwapWith];
+		val[posToSwapWith]=temp;
 	}
 	
 
