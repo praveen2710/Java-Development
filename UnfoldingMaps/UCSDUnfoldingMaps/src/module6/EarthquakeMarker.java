@@ -1,14 +1,15 @@
-package module5;
+package module6;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for earthquakes on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
  *
  */
+// TODO: Implement the comparable interface
 public abstract class EarthquakeMarker extends CommonMarker
 {
 	
@@ -35,7 +36,7 @@ public abstract class EarthquakeMarker extends CommonMarker
 	/** Greater than or equal to this threshold is a deep depth */
 	public static final float THRESHOLD_DEEP = 300;
 
-	// ADD constants for colors if you want
+	// ADD constants for colors
 
 	
 	// abstract method implemented in derived classes
@@ -54,7 +55,10 @@ public abstract class EarthquakeMarker extends CommonMarker
 		this.radius = 1.75f*getMagnitude();
 	}
 	
-
+	// TODO: Add the method:
+	// public int compareTo(EarthquakeMarker marker)
+	
+	
 	// calls abstract method drawEarthquake and then checks age and draws X if needed
 	@Override
 	public void drawMarker(PGraphics pg, float x, float y) {
@@ -90,14 +94,24 @@ public abstract class EarthquakeMarker extends CommonMarker
 	}
 
 	/** Show the title of the earthquake if this marker is selected */
-	@Override
 	public void showTitle(PGraphics pg, float x, float y)
 	{
-		// TODO: Implement this method
+		String title = getTitle();
+		pg.pushStyle();
 		
-		float titleWidth = pg.textWidth(getTitle());
-		pg.fill(0,0,0);
-		pg.text(getTitle(), x, y,titleWidth/2,titleWidth/2);
+		pg.rectMode(PConstants.CORNER);
+		
+		pg.stroke(110);
+		pg.fill(255,255,255);
+		pg.rect(x, y + 15, pg.textWidth(title) +6, 18, 5);
+		
+		pg.textAlign(PConstants.LEFT, PConstants.TOP);
+		pg.fill(0);
+		pg.text(title, x + 3 , y +18);
+		
+		
+		pg.popStyle();
+		
 	}
 
 	
@@ -131,6 +145,14 @@ public abstract class EarthquakeMarker extends CommonMarker
 	}
 	
 	
+	/** toString
+	 * Returns an earthquake marker's string representation
+	 * @return the string representation of an earthquake marker.
+	 */
+	public String toString()
+	{
+		return getTitle();
+	}
 	/*
 	 * getters for earthquake properties
 	 */

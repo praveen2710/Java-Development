@@ -1,21 +1,16 @@
-package module5;
+package module6;
 
 import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.geo.Location;
-import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for cities on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
- *
+ * 
  */
-// TODO: Change SimplePointMarker to CommonMarker as the very first thing you do 
-// in module 5 (i.e. CityMarker extends CommonMarker).  It will cause an error.
-// That's what's expected.
 public class CityMarker extends CommonMarker {
 	
 	public static int TRI_SIZE = 5;  // The size of the triangle marker
@@ -30,13 +25,20 @@ public class CityMarker extends CommonMarker {
 		// Cities have properties: "name" (city name), "country" (country name)
 		// and "population" (population, in millions)
 	}
-
 	
+	
+	// pg is the graphics object on which you call the graphics
+	// methods.  e.g. pg.fill(255, 0, 0) will set the color to red
+	// x and y are the center of the object to draw. 
+	// They will be used to calculate the coordinates to pass
+	// into any shape drawing methods.  
+	// e.g. pg.rect(x, y, 10, 10) will draw a 10x10 square
+	// whose upper left corner is at position x, y
 	/**
 	 * Implementation of method to draw marker on the map.
 	 */
-	@Override
 	public void drawMarker(PGraphics pg, float x, float y) {
+		//System.out.println("Drawing a city");
 		// Save previous drawing style
 		pg.pushStyle();
 		
@@ -51,37 +53,35 @@ public class CityMarker extends CommonMarker {
 	/** Show the title of the city if this marker is selected */
 	public void showTitle(PGraphics pg, float x, float y)
 	{
+		String name = getCity() + " " + getCountry() + " ";
+		String pop = "Pop: " + getPopulation() + " Million";
 		
-		// TODO: Implement this method
-		//calculating width and height to wrap data appropriately.
-		//need to figure how to color rect and find height. idea use stringBUilder
-		pg.textSize(10);
-		float cityWidth = pg.textWidth(getCity());
-		float countryWidth = pg.textWidth(getCountry());
-		float textBoxWidth = cityWidth>countryWidth?cityWidth:countryWidth;
-		// the '\n' alse eats some space
-		float textBoxHeight = 10*5;
-		pg.fill(255,0,0);
-		pg.text(getCity()+"\n"+getCountry()+"\n"+getPopulation(),x,y,textBoxWidth,textBoxHeight);
+		pg.pushStyle();
+		
+		pg.fill(255, 255, 255);
+		pg.textSize(12);
+		pg.rectMode(PConstants.CORNER);
+		pg.rect(x, y-TRI_SIZE-39, Math.max(pg.textWidth(name), pg.textWidth(pop)) + 6, 39);
+		pg.fill(0, 0, 0);
+		pg.textAlign(PConstants.LEFT, PConstants.TOP);
+		pg.text(name, x+3, y-TRI_SIZE-33);
+		pg.text(pop, x+3, y - TRI_SIZE -18);
+		
+		pg.popStyle();
 	}
 	
-	
-	
-	/* Local getters for some city properties.  
-	 */
-	public String getCity()
+	private String getCity()
 	{
 		return getStringProperty("name");
 	}
 	
-	public String getCountry()
+	private String getCountry()
 	{
 		return getStringProperty("country");
 	}
 	
-	public float getPopulation()
+	private float getPopulation()
 	{
 		return Float.parseFloat(getStringProperty("population"));
 	}
-
 }

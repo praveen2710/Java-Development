@@ -25,11 +25,24 @@ public class SelectionSort {
 		
 	}
 	
+	/**
+	 * Takes in array of integer and swap two values in int
+	 * @param val : the array to swap numbers in
+	 * @param posToSwap position that needs to be swapped
+	 * @param posToSwapWith position that need to be swapped with
+	 */
 	public static void swapIntegers(int[] val,int posToSwap,int posToSwapWith){
 		int temp;
 		temp = val[posToSwap];
 		val[posToSwap] = val[posToSwapWith];
 		val[posToSwapWith]=temp;
+	}
+	
+	public static void displaySortedList(int[] sortedList){
+		//the actual list gets sorted 
+		for(int sorted:sortedList){
+			System.out.println(sorted);
+		}
 	}
 	
 
@@ -38,12 +51,13 @@ public class SelectionSort {
 		
 		//since array is a object the reference gets passed in
 		selectionSort(toSort);
+	
+//		//the actual list gets sorted 
+//		for(int sorted:toSort){
+//			System.out.println(sorted);
 		
-		//the actual list gets sorted 
-		for(int sorted:toSort){
-			System.out.println(sorted);
-		}
-		
+		displaySortedList(toSort);
+//		}	
 	}
 	
 }
