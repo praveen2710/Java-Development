@@ -58,6 +58,8 @@ public class CityMarker extends CommonMarker {
 		
 		pg.pushStyle();
 		
+		
+		//
 		pg.fill(255, 255, 255);
 		pg.textSize(12);
 		pg.rectMode(PConstants.CORNER);
