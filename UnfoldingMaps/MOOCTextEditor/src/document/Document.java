@@ -53,7 +53,17 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-	    return 0;
+	
+		int count = 0;
+		
+		Pattern tokSplitter = Pattern.compile("(?=([AIOUYaiouy]))(\\1+)|([Ee]+)(?<![Ee]$)");
+		Matcher m = tokSplitter.matcher(word);
+		
+		while(m.find()){
+			count++;
+		}
+		
+	    return count;
 	}
 	
 	/** A method for testing
