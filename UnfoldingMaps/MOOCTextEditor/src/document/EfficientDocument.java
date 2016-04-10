@@ -17,6 +17,7 @@ public class EfficientDocument extends Document {
 	
 	public EfficientDocument(String text)
 	{
+		//calling super class constructor
 		super(text);
 		processText();
 	}
@@ -43,6 +44,22 @@ public class EfficientDocument extends Document {
 		// Words are only strings of letters.  No numbers.
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
 		
+		for(int i=0;i<tokens.size();i++){
+			if(isWord(tokens.get(i))){
+				numWords++;
+				numSyllables += countSyllables(tokens.get(i));
+			}else{
+				numSentences++;
+			}
+				
+			//this is to check if last token in sentence is a word and in that case increment sentence
+			if(i==tokens.size()-1){
+				if(isWord(tokens.get(i))){
+					numSentences++;
+				}
+			}
+		}
+		
 		// TODO: Finish this method.  Remember the countSyllables method from 
 		// Document.  That will come in handy here.
 	}
@@ -58,7 +75,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumWords() {
 		//TODO: write this method.  Hint: It's simple
-	    return 0;
+	    return numWords;
 	}
 
 	/**
@@ -72,7 +89,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSentences() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSentences;
 	}
 
 	/**
@@ -86,7 +103,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSyllables() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSyllables;
 	}
 	
 	// Can be used for testing

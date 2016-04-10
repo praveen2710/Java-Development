@@ -54,7 +54,12 @@ public abstract class Document {
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
 	
-		int count = 0;
+		 //System.out.print("Counting syllables in " + word + "...");
+		
+		/**
+		 * This is my try to use regmod to indentify the syllables in word. 
+		 *  
+		 int count = 0;
 		
 		Pattern tokSplitter = Pattern.compile("(?=([AIOUYaiouy]))(\\1+)|([Ee]+)(?<![Ee]$)");
 		Matcher m = tokSplitter.matcher(word);
@@ -64,6 +69,28 @@ public abstract class Document {
 		}
 		
 	    return count;
+		 */
+		
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++)
+		{
+		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
+		    		&& newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
+			}
+		}
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 	
 	/** A method for testing
@@ -127,7 +154,8 @@ public abstract class Document {
 	public double getFleschScore()
 	{
 	    // TODO: Implement this method
-	    return 0.0;
+		return 206.835-(1.05*(getNumWords()/getNumSentences())-84.6*(getNumSyllables()/getNumWords()));
+	     
 	}
 	
 	
