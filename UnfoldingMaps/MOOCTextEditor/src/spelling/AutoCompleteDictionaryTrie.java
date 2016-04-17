@@ -1,9 +1,6 @@
 package spelling;
 
 import java.util.List;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /** 
@@ -30,11 +27,20 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	{
 	    //TODO: Implement this method.
 		char[] wordChar = word.toLowerCase().toCharArray();
-		insertWordInDict(wordChar);
+		TrieNode lastNode = insertWordInDict(wordChar);
+		if(!lastNode.endsWord()){
+			lastNode.setEndsWord(true);
+			size++;
+		}
 	    return true;
 	}
 	
-	private void insertWordInDict(char[] wordChar) {
+	/**
+	 * This will add a node for each char in word to add if not existing
+	 * @param wordChar the char of word for which we need to add a node
+	 * @return the last char node that ends the word.
+	 */
+	private TrieNode insertWordInDict(char[] wordChar) {
 		// TODO Auto-generated method stub
 		TrieNode currentNode=root;
 		/**
@@ -50,13 +56,11 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 			}
 						
 			currentNode = nextNode;
-			
-			if(i==wordChar.length-1){
-				nextNode.setEndsWord(true);
-			}
-	
 		}
 		
+//		currentNode.setEndsWord(true);	
+		
+		return currentNode;
 	}
 
 
@@ -67,8 +71,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
-		
-	    return 0;
+	    return size;
 	}
 	
 	
@@ -79,12 +82,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	    // TODO: Implement this method
 		char[] wordChar = s.toLowerCase().toCharArray();
 		TrieNode currentNode = root; 
-		System.out.println(s.length());
-		for(int i=0;i<=s.length();i++){
-			
-			if(i==s.length()){
-				return currentNode.endsWord();
-			}
+		for(int i=0;i<s.length();i++){
 			
 			TrieNode nextNode = currentNode.getChild(wordChar[i]);
 			//since we could not find next letter the word does not exist.
@@ -93,10 +91,12 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 			}else{
 				currentNode = nextNode;
 			}
-			
-			
 		}
-		return false;
+		if(currentNode.endsWord()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/** 
@@ -124,21 +124,82 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
     	 
-         return null;
+    	 List<String> predictWords = new LinkedList<String>();
+    	 
+    	 LinkedList<TrieNode> queueNodes = new LinkedList<TrieNode>();
+    	 
+    	 TrieNode stemNode = findStem(prefix);
+    	 
+    	 if(stemNode!=null){
+    		 queueNodes.add(stemNode);
+    	 }
+    	 
+    	 while(predictWords.size()!=numCompletions){
+    		 TrieNode queueNode ;
+    		 if(!queueNodes.isEmpty())
+    			 queueNode =queueNodes.removeFirst();
+    		 else
+    			 return predictWords;
+    		 if(queueNode.endsWord())
+    			 predictWords.add(queueNode.getText());
+    		 
+    		 addNodeToQueue(queueNode, queueNodes, numCompletions);
+    	 }
+    	 
+    	 return predictWords;
      }
+     
+    /**
+     * This adds all child nodes to a node until the queue is full or no more child nodes are present
+     * 
+     * @param currNode the node for which we need to find children
+     * @param queueNodes the list to which we are adding child nodes
+     * @param numCompletions the number of elements we want to add to list.
+     */
+ 	private void addNodeToQueue(TrieNode currNode, List<TrieNode> queueNodes, int numCompletions) {
+		// TODO Auto-generated method stub
+ 		 for (Character c : currNode.getValidNextCharacters()) {
+			 	TrieNode nextNode = currNode.getChild(c);
+	 			if(queueNodes.size()<=numCompletions)
+	 			  queueNodes.add(nextNode);
+	 		}
+	}
 
- 	// For debugging
+ 	/**
+ 	 * Based on the input finds the node in the prefix 
+ 	 * @param prefix the string for which we need to find stem node.
+ 	 * @return the node of the last char in prefix or
+ 	 *         {@code NULL} if the node is not found.
+ 	 */
+	private TrieNode findStem(String prefix) {
+		// TODO Auto-generated method stub
+		TrieNode currentNode = root;
+		
+		char[] charWords = prefix.toCharArray();
+		
+		for(char charWord:charWords){
+			currentNode = currentNode.getChild(charWord);
+			if(currentNode == null)
+				return null;
+		}
+		return currentNode;
+	}
+
+
+	// For debugging
  	public void printTree()
  	{
  		printNode(root);
  	}
  	
- 	/** Do a pre-order traversal from this node down */
+ 	/** Do a pre-order traversal from this node down 
+ 	 * @param count 
+ 	 * @return */
  	public void printNode(TrieNode curr)
  	{
  		if (curr == null) 
- 			return;
- 		
+ 			return ;
+	 		
  		System.out.println(curr.getText());
  		
  		TrieNode next = null;
@@ -146,8 +207,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
  			next = curr.getChild(c);
  			printNode(next);
  		}
- 	}
- 	
 
+ 	}
 	
 }
