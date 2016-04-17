@@ -25,6 +25,9 @@ public class NearbyWordsTest {
 		List<String> retList = new ArrayList<String>();
 		w.insertions("part", retList, true);
 		assertEquals("Word apart is present", true, retList.contains("apart"));
+		// having a unit test here saved my skin otherwise I would have missed the 
+		//scenario where party was not being identified due to i<string.lenght case
+		//where the insertion does not happen after last element
 		assertEquals("Word party is present", true, retList.contains("party"));
 		assertEquals("Word party is present", false, retList.contains("jpart"));
 	}
