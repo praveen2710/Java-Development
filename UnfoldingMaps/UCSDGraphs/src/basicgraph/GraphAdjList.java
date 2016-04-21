@@ -2,6 +2,8 @@ package basicgraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -96,8 +98,13 @@ public class GraphAdjList extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */		
 	 public List<Integer> getDistance2(int v) {
-		 // XXX: Implement this method in week 1
-		 return null;
+		 // TODO: Implement this method in week 1
+		 List<Integer> neighbors = getNeighbors(v);
+		 List<Integer> Neighbors2nd = new LinkedList<Integer>();
+		 for(int neighbor : neighbors){
+			 Neighbors2nd.addAll(getNeighbors(neighbor));
+		 }
+		 return Neighbors2nd;
 	}
 	
 	/**

@@ -2,12 +2,15 @@ package basicgraph;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javafx.scene.control.ComboBox;
 import util.GraphLoader;
 
 /** An abstract class that implements a directed graph. 
@@ -121,8 +124,17 @@ public abstract class Graph {
 	 * @return The degree sequence of this graph.
 	 */
 	public List<Integer> degreeSequence() {
-		// XXX: Implement in part 1 of week 1
-		return null;
+		// TODO: Implement in part 1 of week 1
+		List<Integer> verticesdegree = new LinkedList<Integer>();
+		
+		for(int vertex = 0;vertex<numVertices;vertex++){
+			int inDegree = getInNeighbors(vertex).size();
+			int outDegree = getNeighbors(vertex).size();
+			int totalDegree = inDegree + outDegree;
+			verticesdegree.add(totalDegree);
+		}
+		Collections.sort(verticesdegree,Collections.reverseOrder());
+		return verticesdegree;
 	}
 	
 	/**
@@ -228,7 +240,7 @@ public abstract class Graph {
 
 	
 	public static void main (String[] args) {
-		GraphLoader.createIntersectionsFile("data/maps/myucsd.map", "data/intersections/myucsd.intersections");
+		GraphLoader.createIntersectionsFile("data/maps/ucsd.map", "data/intersections/ucsd.intersections");
 		
 
 		// For testing of Part 1 functionality
@@ -242,6 +254,7 @@ public abstract class Graph {
 		GraphAdjList graphFromFile = new GraphAdjList();
 		GraphLoader.loadRoadMap("data/testdata/simpletest.map", graphFromFile);
 		System.out.println(graphFromFile);
+		graphFromFile.getDistance2(0);
 		
 		System.out.println("Observe all degrees are <= 12.");
 		System.out.println("****");
