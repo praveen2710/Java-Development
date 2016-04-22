@@ -8,12 +8,19 @@
 package roadgraph;
 
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import geography.GeographicPoint;
 import util.GraphLoader;
+import week2example.MazeNode;
 
 /**
  * @author UCSD MOOC development team and YOU
@@ -25,6 +32,9 @@ import util.GraphLoader;
 public class MapGraph {
 	//TODO: Add your member variables here in WEEK 2
 	
+	HashSet<IntersectionNode> nodeSet;
+	
+	private final static Logger LOGGER = Logger.getLogger(MapGraph.class.getName()); 
 	
 	/** 
 	 * Create a new empty MapGraph 
@@ -32,6 +42,7 @@ public class MapGraph {
 	public MapGraph()
 	{
 		// TODO: Implement in this constructor in WEEK 2
+		nodeSet = new HashSet<IntersectionNode>();
 	}
 	
 	/**
@@ -41,7 +52,7 @@ public class MapGraph {
 	public int getNumVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		return nodeSet.size();
 	}
 	
 	/**
@@ -49,9 +60,14 @@ public class MapGraph {
 	 * @return The vertices in this graph as GeographicPoints
 	 */
 	public Set<GeographicPoint> getVertices()
-	{
+	{	
+		Set<GeographicPoint> intersections = new HashSet<GeographicPoint>();
 		//TODO: Implement this method in WEEK 2
-		return null;
+		for(IntersectionNode node:nodeSet){
+			GeographicPoint ge = new GeographicPoint(node.getXCordinate(), node.getYCordinate());
+			intersections.add(ge);
+		}
+		return intersections;
 	}
 	
 	/**
@@ -60,8 +76,12 @@ public class MapGraph {
 	 */
 	public int getNumEdges()
 	{
+		int totalEdges= 0;
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		for(IntersectionNode node:nodeSet){
+			totalEdges += node.getEdges().size();
+		}
+		return totalEdges;
 	}
 
 	
@@ -76,7 +96,20 @@ public class MapGraph {
 	public boolean addVertex(GeographicPoint location)
 	{
 		// TODO: Implement this method in WEEK 2
-		return false;
+		try{
+			IntersectionNode findNode = findIntersection(location);
+			if(findNode!=null){
+				return false;
+			}else{
+				IntersectionNode newNode = new IntersectionNode(location.x, location.y);
+				nodeSet.add(newNode);
+				return true;
+			}
+		}
+		catch(NullPointerException ne){
+			LOGGER.log(Level.SEVERE,"addVertex",ne);
+			return false;
+		}
 	}
 	
 	/**
@@ -95,9 +128,37 @@ public class MapGraph {
 			String roadType, double length) throws IllegalArgumentException {
 
 		//TODO: Implement this method in WEEK 2
+		IntersectionNode toNode = findIntersection(to);
+		IntersectionNode fromNode = findIntersection(from);
+		if(from==null||to==null||length<0||toNode==null||fromNode==null){
+			throw new IllegalArgumentException();
+		}
+		
+		toNode.addEdge(fromNode, roadName, roadType, length);
 		
 	}
 	
+	
+	/**
+	 * Method to determine if node is added to hash map and retrieve it
+	 * @param loc  : the location to be verified
+	 * @return {@link IntersectionNode} if found {@code null} otherwise
+	 * @throws NullPointerException if location or {@link IntersectionNode} is null
+	 */
+	protected IntersectionNode findIntersection(GeographicPoint loc) {
+		// TODO Auto-generated method stub
+		try{
+			for(IntersectionNode node:nodeSet){
+				if(node.getXCordinate()==loc.x&&node.getYCordinate()==loc.y){
+					return node;
+				}
+			}
+			return null;
+		}catch(NullPointerException ne){
+			LOGGER.log(Level.SEVERE,"findIntersection",ne);
+			throw ne;
+		}
+	}
 
 	/** Find the path from start to goal using breadth first search
 	 * 
@@ -126,11 +187,48 @@ public class MapGraph {
 		// TODO: Implement this method in WEEK 2
 		
 		// Hook for visualization.  See writeup.
-		//nodeSearched.accept(next.getLocation());
+//		nodeSearched.accept(next.getLocation());
+		
+		Queue<IntersectionNode> queue = new LinkedList<IntersectionNode>();
+		Set<IntersectionNode> visited = new HashSet<IntersectionNode>();
+		HashMap<IntersectionNode, IntersectionNode> parentMap = new HashMap<IntersectionNode, IntersectionNode>();
+	
+		IntersectionNode startNode = findIntersection(start);
+		IntersectionNode goalNode = findIntersection(goal);
+		queue.add(startNode);
+		
+		while(!queue.isEmpty()){
+			IntersectionNode currNode = queue.remove();
+			if(currNode == goalNode){
+				System.out.println("Found Goal Yipee");
+				break;
+			}
+			for(Edge edge:currNode.getEdges()){
+				if(!visited.contains(edge.getDestNode())){
+					queue.add(edge.getDestNode());
+					visited.add(edge.getDestNode());
+					parentMap.put(edge.getDestNode(),currNode);
+				}
+			}
+		}
+		
+		return retracePath(startNode,goalNode,parentMap);
 
-		return null;
 	}
 	
+
+	private List<GeographicPoint> retracePath(IntersectionNode startNode, IntersectionNode goalNode, HashMap<IntersectionNode, IntersectionNode> parentMap) {
+		// TODO Auto-generated method stub
+		List<GeographicPoint> path = new LinkedList<GeographicPoint>();
+		IntersectionNode currNode = goalNode;
+		path.add(new GeographicPoint(currNode.getXCordinate(), currNode.getYCordinate()));
+		while(currNode!=startNode){
+			IntersectionNode parentNode = parentMap.get(currNode);
+			path.add(new GeographicPoint(parentNode.getXCordinate(), parentNode.getYCordinate()));
+			currNode = parentNode;
+		}
+		return path;
+	}
 
 	/** Find the path from start to goal using Dijkstra's algorithm
 	 * 
@@ -196,6 +294,22 @@ public class MapGraph {
 		
 		return null;
 	}
+	
+	@Override
+	public String toString(){
+		
+	
+		for(IntersectionNode node:nodeSet){
+			System.out.println("//**");
+			System.out.println("["+node.getXCordinate()+","+node.getYCordinate()+"]");
+			System.out.println("//*****//");
+			for(Edge edge:node.getEdges()){
+				System.out.println("["+edge.getDestNode().getXCordinate()+","+edge.getDestNode().getYCordinate()+"]");
+			}
+		}
+		
+		return null;
+	}
 
 	
 	
@@ -205,6 +319,21 @@ public class MapGraph {
 		MapGraph theMap = new MapGraph();
 		System.out.print("DONE. \nLoading the map...");
 		GraphLoader.loadRoadMap("data/testdata/simpletest.map", theMap);
+		System.out.println(theMap.getNumEdges());
+		System.out.println(theMap.getNumVertices());
+		
+		GeographicPoint start = new GeographicPoint(1,1);
+		GeographicPoint goal = new GeographicPoint(8,-1);
+		
+		
+		List<GeographicPoint> thePath =theMap.bfs(start, goal);
+		
+		for(GeographicPoint node:thePath){
+			System.out.println("["+node.x+","+node.y+"]");
+		}
+		
+//		theMap.toString();
+		
 		System.out.println("DONE.");
 		
 		// You can use this method for testing.  
