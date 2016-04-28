@@ -8,10 +8,12 @@
 package roadgraph;
 
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -134,7 +136,7 @@ public class MapGraph {
 			throw new IllegalArgumentException();
 		}
 		
-		toNode.addEdge(fromNode, roadName, roadType, length);
+		toNode.addEdge(fromNode, roadName, roadType, GeographicPoint.distance(to.x,to.y, from.x, from.y));
 		
 	}
 	
@@ -259,8 +261,50 @@ public class MapGraph {
 
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
+		IntersectionNode startNode = findIntersection(start);
+		IntersectionNode goalNode = findIntersection(goal);
+		HashMap<IntersectionNode, IntersectionNode> parentMap = new HashMap<IntersectionNode, IntersectionNode>();
+		Set<IntersectionNode> visited = new HashSet<IntersectionNode>();
 		
-		return null;
+		PriorityQueue<IntersectionNode> pq = new PriorityQueue<IntersectionNode>(new Comparator<IntersectionNode>(){
+			@Override
+			public int compare(IntersectionNode o1, IntersectionNode o2) {
+				if(o1.getDistance()>o2.getDistance()){
+					return 1;
+				}else if(o1.getDistance()<o2.getDistance()){
+					return -1;
+				}else
+					return 0;
+			}
+		
+		});
+		
+		pq.add(startNode);
+		startNode.setDistance(0);
+		
+		while(!pq.isEmpty()){
+			IntersectionNode currNode = pq.remove();
+			visited.add(currNode);
+			System.out.println("["+currNode.getXCordinate()+","+currNode.getYCordinate()+"]");
+			if(currNode==goalNode){
+				System.out.println("Yay Found Path");
+				break;
+			}
+			for(Edge eachEdge:currNode.getEdges()){
+				if(!visited.contains(eachEdge.getDestNode())){
+					IntersectionNode neighbourNode = eachEdge.getDestNode();
+					Double currToPath = currNode.getDistance()+eachEdge.getWeight();
+					if(neighbourNode.getDistance()>currToPath){
+						neighbourNode.setDistance(currToPath);
+						//hash map replaces value for key else adds new key if not exisiting.
+						parentMap.put(neighbourNode, currNode);
+						pq.add(neighbourNode);
+					}
+				}
+			}
+		}
+		
+		return retracePath(startNode,goalNode,parentMap);
 	}
 
 	/** Find the path from start to goal using A-Star search
@@ -292,9 +336,67 @@ public class MapGraph {
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
 		
-		return null;
+		IntersectionNode startNode = findIntersection(start);
+		IntersectionNode goalNode = findIntersection(goal);
+		HashMap<IntersectionNode, IntersectionNode> parentMap = new HashMap<IntersectionNode, IntersectionNode>();
+		Set<IntersectionNode> visited = new HashSet<IntersectionNode>();
+		resetMap();
+		
+		PriorityQueue<IntersectionNode> pq = new PriorityQueue<IntersectionNode>(new Comparator<IntersectionNode>(){
+			@Override
+			public int compare(IntersectionNode o1, IntersectionNode o2) {
+				double o1distToGoal = GeographicPoint.distance(o1.getXCordinate(),o1.getYCordinate(),start.x,start.y)+GeographicPoint.distance(o1.getXCordinate(), o1.getYCordinate(), goal.x, goal.y);
+				double o2distToGoal = GeographicPoint.distance(o2.getXCordinate(),o2.getYCordinate(),start.x,start.y)+GeographicPoint.distance(o2.getXCordinate(), o2.getYCordinate(), goal.x, goal.y);
+				if(o1distToGoal>o2distToGoal){
+					return 1;
+				}else if(o1distToGoal<o2distToGoal){
+					return -1;
+				}else
+					return 0;
+			}
+		
+		});
+		
+		pq.add(startNode);
+		startNode.setDistance(0);
+		
+		while(!pq.isEmpty()){
+			IntersectionNode currNode = pq.remove();
+			System.out.println("["+currNode.getXCordinate()+","+currNode.getYCordinate()+"]");
+			visited.add(currNode);
+			if(currNode==goalNode){
+				System.out.println("Yay Found Path");
+				break;
+			}
+			for(Edge eachEdge:currNode.getEdges()){
+				if(!visited.contains(eachEdge.getDestNode())){
+					IntersectionNode neighbourNode = eachEdge.getDestNode();
+					Double currToPath = currNode.getDistance()+eachEdge.getWeight();
+					if(neighbourNode.getDistance()>currToPath){
+						neighbourNode.setDistance(currToPath);
+						//hash map replaces value for key else adds new key if not exisiting.
+						parentMap.put(neighbourNode, currNode);
+						pq.add(neighbourNode);
+					}
+				}
+			}
+		}
+		
+		return retracePath(startNode,goalNode,parentMap);
+		
 	}
 	
+	/**
+	 * Resets the distance on vertex to reset the graph;
+	 * @param startNode
+	 */
+	private void resetMap() {
+		// TODO Auto-generated method stub
+		for(IntersectionNode vertex:nodeSet){
+			vertex.setDistance(Double.POSITIVE_INFINITY);
+		}
+	}
+
 	@Override
 	public String toString(){
 		
@@ -304,7 +406,7 @@ public class MapGraph {
 			System.out.println("["+node.getXCordinate()+","+node.getYCordinate()+"]");
 			System.out.println("//*****//");
 			for(Edge edge:node.getEdges()){
-				System.out.println("["+edge.getDestNode().getXCordinate()+","+edge.getDestNode().getYCordinate()+"]");
+				System.out.println("["+edge.getDestNode().getXCordinate()+","+edge.getDestNode().getYCordinate()+"]"+edge.getWeight());
 			}
 		}
 		
@@ -326,9 +428,15 @@ public class MapGraph {
 		GeographicPoint goal = new GeographicPoint(8,-1);
 		
 		
-		List<GeographicPoint> thePath =theMap.bfs(start, goal);
+//		List<GeographicPoint> thePath =theMap.bfs(start, goal);
+		List<GeographicPoint> thePath = theMap.dijkstra(start, goal);
+		List<GeographicPoint> thePath2 = theMap.aStarSearch(start, goal);
 		
 		for(GeographicPoint node:thePath){
+			System.out.println("["+node.x+","+node.y+"]");
+		}
+		
+		for(GeographicPoint node:thePath2){
 			System.out.println("["+node.x+","+node.y+"]");
 		}
 		
