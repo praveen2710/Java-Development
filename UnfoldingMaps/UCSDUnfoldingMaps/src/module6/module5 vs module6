@@ -1,0 +1,22 @@
+This is to compare this implementation with what I had worked in
+module 5:
+
+CityMarker class:
+
+I kind of had the side idea as this regarding calculating width
+but was not sure on how to calculate height.I dont like how he 
+figured height it looks kind of hacky. But I guess it works.
+
+EarthQuakeMarker class:
+	
+	selectMarkerIfHover: 
+	  kind of similar implementation so not much different here
+	
+	mouseClicked:
+	 we have taken a different approach . My approach is to reuse same code or overload the calss 
+	 whereas the given implementations separates city marker from quake marker.
+	 
+EarthQuakeMarker Class	 
+I kind of had the side idea as this regarding calculating width
+but was not sure on how to calculate height.I dont like how he 
+figured height it looks kind of hacky. But I guess it works.
