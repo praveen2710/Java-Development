@@ -446,20 +446,19 @@ public class MapGraph {
 		
 		// You can use this method for testing.  
 		
-		/* Use this code in Week 3 End of Week Quiz
-		MapGraph theMap = new MapGraph();
+		
+		MapGraph theMap2 = new MapGraph();
 		System.out.print("DONE. \nLoading the map...");
 		GraphLoader.loadRoadMap("data/maps/utc.map", theMap);
 		System.out.println("DONE.");
 
-		GeographicPoint start = new GeographicPoint(32.8648772, -117.2254046);
-		GeographicPoint end = new GeographicPoint(32.8660691, -117.217393);
+		GeographicPoint start2 = new GeographicPoint(32.8648772, -117.2254046);
+		GeographicPoint end2 = new GeographicPoint(32.8660691, -117.217393);
 		
 		
-		List<GeographicPoint> route = theMap.dijkstra(start,end);
-		List<GeographicPoint> route2 = theMap.aStarSearch(start,end);
+		List<GeographicPoint> route = theMap2.dijkstra(start2,end2);
+		List<GeographicPoint> route2 = theMap2.aStarSearch(start2,end2);
 
-		*/
 		
 	}
 	

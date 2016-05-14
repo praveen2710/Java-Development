@@ -124,7 +124,7 @@ public abstract class Graph {
 	 * @return The degree sequence of this graph.
 	 */
 	public List<Integer> degreeSequence() {
-		// TODO: Implement in part 1 of week 1
+		// TODO: Implement in part 1 of week 1 of assingment
 		List<Integer> verticesdegree = new LinkedList<Integer>();
 		
 		for(int vertex = 0;vertex<numVertices;vertex++){
