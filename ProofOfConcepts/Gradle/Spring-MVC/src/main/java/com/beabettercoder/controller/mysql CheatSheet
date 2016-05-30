@@ -1,0 +1,14 @@
+access mysql from terminal
+	mysql -u root
+List all Databases in MySql
+    show databases;
+creating databases
+    create database  database_name;
+access database
+    use database_name;
+show tables in database
+    show tables;
+table description
+    describe table_name
+see data in table
+    select * from table_name
