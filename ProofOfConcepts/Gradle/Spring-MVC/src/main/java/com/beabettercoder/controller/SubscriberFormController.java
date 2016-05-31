@@ -13,23 +13,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.beabettercoder.dao.SubscriberDao;
 import com.beabettercoder.entities.Subscriber;
 import com.beabettercoder.entities.Subscriber.Frequency;
 import com.beabettercoder.entities.Subscriber.Gender;
-import com.beabettercoder.entities.Subsuser;
-import com.beabettercoder.springconfig.WebConfiguration;
 
 //@TODO look into spring security
 
 @Controller
 public class SubscriberFormController {
-	
-//	AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-	
+		
 	@Autowired
     private SubscriberDao subsDao;
 	
@@ -54,14 +50,18 @@ public class SubscriberFormController {
 		return "userManagment";
 	}
 	
+	//note to self
+	//hibernate validation requires valid email address and phone number to be passed
     @RequestMapping(value = "uform", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody Subsuser user,   UriComponentsBuilder ucBuilder) {
+    public @ResponseBody Subscriber createUser(@RequestBody Subscriber subs,   UriComponentsBuilder ucBuilder) {
 //        System.out.println("Creating User " + user.getName());
-    	System.out.println(user.toString());
+    	System.out.println(subs.toString());
     	System.out.println("in here");
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(4).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    	// setting some constraint data to handle hibernate validation errors
+    	subs.setGender(Gender.FEMALE);
+    	subs.setAge(21);  //greater than 13 and less than 110
+    	subsDao.savePerson(subs);
+        return subs;
     }
   
 	

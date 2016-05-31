@@ -13,7 +13,11 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.beabettercoder.entities.Subscriber;
@@ -24,20 +28,36 @@ import com.beabettercoder.dao.SubscriberDao;
 //import com.beabettercoder.entities.Person;
 
 @Configuration
-// @TODO make note of not to use EnableWebMvc
-//@EnableWebMvc
+// @NOTE removing EnableWebMVC resolves servlet context issue but not a good practice
+@EnableWebMvc
 @ComponentScan(basePackages="com.beabettercoder.controller")
 @EnableTransactionManagement
-public class WebConfiguration {
- 
+public class WebConfiguration extends WebMvcConfigurerAdapter{
+	
+    // equivalents for <mvc:resources/> tags
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+    }
+
+    // equivalent for <mvc:default-servlet-handler/> tag
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+	
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = 
                     new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".jsp");
+        resolver.setOrder(0);
         return resolver;
     }
+       
     
     @Bean
     public MessageSource messageSource() {
@@ -57,7 +77,7 @@ public class WebConfiguration {
 	 
 	    return dataSource;
 	}
-    
+       
     @Bean
 	public SessionFactory sessionFactory() {
 		return new LocalSessionFactoryBuilder(getDataSource())

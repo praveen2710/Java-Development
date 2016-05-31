@@ -139,7 +139,8 @@ public class Subscriber {
 	public String toString() {
 		return "Subscriber [name=" + name + ", age=" + age + ", gender=" + gender
 				+ ", newsletterFrequency=" + newsletterFrequency
-				+ ", receiveNewsletter=" + receiveNewsletter + "]";
+				+ ", receiveNewsletter=" + receiveNewsletter
+				+ "phone=" + phone + "email=" + email+" ]";
 	}
 	
 }
