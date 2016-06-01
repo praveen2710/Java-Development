@@ -1,4 +1,4 @@
-#H1 Spring-MVC
+# Spring-MVC
 
 This will be my implementation to intergrate and implement various tools to make a effective web application. This in now way is a full fledged application and just a POC.
 
