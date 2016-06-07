@@ -34,5 +34,6 @@ __TODO LIST__
 * Verify if all necessary parts of application are on github and run it using gradle in different workspace
 * Handle http error on client side gracefully i.e 500,404,403 etc..
 * Reaserch and determine need of testing on angular code i.e Jasmine
+* Mock  json reply from third party API to make tests truly unit tests
 
   
