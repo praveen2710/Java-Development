@@ -21,13 +21,13 @@ __Tools and Application Used__
 
 __TODO LIST__
 
-* Brainstorm on how to implement solution ie. MVC,SPA,EJB,JPA etc.  etc...
-* Create  a desing document to define how to handle workflow and decide functionality allocation
-* Investigate on how to convert JSON to pojo quickly and efficiently
+* ~~Brainstorm on how to implement solution ie. MVC,SPA,EJB,JPA etc.  etc...~~
+* ~~Create  a desing document to define how to handle workflow and decide functionality allocation~~
+* ~~Investigate on how to convert JSON to pojo quickly and efficiently~~
 * Do a quick read on angular and implement client side code
-* implement API classes to retrieve result from API on requests
-* Write unit test for different scenarios for API class
-* Implement the controller class for client side to interact with server
+* ~~implement API classes to retrieve result from API on requests~~
+* ~~Write unit test for different scenarios for API class~~
+* ~~Implement the controller class for client side to interact with server~~
 * Read and implement testing of controller
 * Reasarch on best way to save API key
 * apply gradle plugin for code coverage and findbug
