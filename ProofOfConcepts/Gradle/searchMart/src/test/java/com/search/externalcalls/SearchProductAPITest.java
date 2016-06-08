@@ -1,11 +1,13 @@
 package com.search.externalcalls;
 
-import static org.junit.Assert.*;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.searchMart.entities.Items;
 import com.searchMart.entities.WalmartSearchResult;
@@ -21,13 +23,16 @@ import junit.framework.TestCase;
  *
  */
 
-public class SearchProductAPITest extends TestCase {
+public class SearchProductAPITest{
 	
-	@Override
-	protected void setUp() {
+	@Rule
+	public final ExpectedException exception = ExpectedException.none();
+	
+	@Before
+	public void setUp() {
 	  System.out.println("Setting it up!");
 		try {
-			setFinalStatic(WalmartAPIKey.class.getField("APIKey"), "rgcjh9zn65xgegdssd2ayd55");
+			setFinalStatic(WalmartAPIDetails.class.getField("APIKey"), "rgcjh9zn65xgegdssd2ayd55");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,7 +41,7 @@ public class SearchProductAPITest extends TestCase {
 
 
 	@Test
-	public void testAPI() {
+	public void testSearchAPI() {
 		SearchProductAPI spi = new SearchProductAPI("ipod");
 		
 		WalmartSearchResult wsp = spi.searchAPICall();
@@ -47,11 +52,12 @@ public class SearchProductAPITest extends TestCase {
 	}
 	
 	@Test
-	public void testAPIWithEmptyQueryString() {
+	public void testSearchAPIWithEmptyQueryString() {
 		SearchProductAPI spi = new SearchProductAPI("");
 	
-		System.out.println(WalmartAPIKey.APIKey);
+		System.out.println(WalmartAPIDetails.APIKey);
 		
+		exception.expect(NullPointerException.class);
 		WalmartSearchResult wsp = spi.searchAPICall();
 		
 		System.out.println(wsp.toString());
@@ -59,11 +65,12 @@ public class SearchProductAPITest extends TestCase {
 	}
 	
 	@Test
-	public void testAPIWithNullQueryString() {
+	public void testSearchAPIWithNullQueryString() {
 		SearchProductAPI spi = new SearchProductAPI(null);
 	
-		System.out.println(WalmartAPIKey.APIKey);
+		System.out.println(WalmartAPIDetails.APIKey);
 		
+		exception.expect(NullPointerException.class);
 		WalmartSearchResult wsp = spi.searchAPICall();
 		
 		System.out.println(wsp.toString());
@@ -71,18 +78,20 @@ public class SearchProductAPITest extends TestCase {
 	}
 	
 	@Test
-	public void testAPIWithEmptyBadAPIKey() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testSearchAPIEmptyBadAPIKey() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		
 		SearchProductAPI spi = new SearchProductAPI("ipod");
 		try {
-			setFinalStatic(WalmartAPIKey.class.getField("APIKey"), "asas");
+			setFinalStatic(WalmartAPIDetails.class.getField("APIKey"), "asas");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("In Bad API test API = "+WalmartAPIKey.APIKey);
+		System.out.println("In Bad API test API = "+WalmartAPIDetails.APIKey);
 		
+		exception.expect(HttpClientErrorException.class);
+//		exception.expect(hasProperty("response", hasProperty("status", is(403))));
 		WalmartSearchResult wsp  = spi.searchAPICall();
 		
 		System.out.println(wsp.toString());

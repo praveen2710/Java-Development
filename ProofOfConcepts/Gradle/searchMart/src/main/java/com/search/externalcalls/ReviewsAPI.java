@@ -26,11 +26,10 @@ private String productId;
 	 */
 	public ProductReview reviewAPICall(){
 		if(productId==null||productId.isEmpty() || productId.trim().isEmpty()){
-			throw new NullPointerException("Query string cannot be empty");
+			throw new NullPointerException("Query Id cannot be empty");
 		}
-		List<ProductRecommendations> listItems = new ArrayList<ProductRecommendations>();
 		RestTemplate restTemplate = new RestTemplate();
-		ProductReview prodReview  = restTemplate.getForObject("http://api.walmartlabs.com/v1/reviews/{productId}?apiKey={apiKey}",ProductReview.class,productId,WalmartAPIKey.APIKey);
+		ProductReview prodReview  = restTemplate.getForObject(WalmartAPIDetails.reviewUrl,ProductReview.class,productId,WalmartAPIDetails.APIKey);
 		
 		return prodReview;
 	}

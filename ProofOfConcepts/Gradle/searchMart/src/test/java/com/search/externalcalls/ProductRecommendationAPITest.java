@@ -11,7 +11,7 @@ import com.searchMart.entities.ProductRecommendations;
 public class ProductRecommendationAPITest {
 
 	@Test
-	public void testAPI() {
+	public void testRecommendationAPI() {
 		ProductRecommendationAPI prAPI = new ProductRecommendationAPI("42608121");
 		
 		List<ProductRecommendations> pra = prAPI.recommendationAPICall();
@@ -19,7 +19,6 @@ public class ProductRecommendationAPITest {
 		for(ProductRecommendations a: pra){
 			System.out.println(a.getItemId());
 		}
-		
 	}
 
 }

@@ -30,7 +30,7 @@ public class SearchProductAPI {
 			throw new NullPointerException("Query string cannot be empty");
 		}
 		RestTemplate restTemplate = new RestTemplate();
-		WalmartSearchResult wsr = restTemplate.getForObject("http://api.walmartlabs.com/v1/search?apiKey={apiKey}&query={queryString}", WalmartSearchResult.class,WalmartAPIKey.APIKey,productQuery);
+		WalmartSearchResult wsr = restTemplate.getForObject(WalmartAPIDetails.searchUrl, WalmartSearchResult.class,WalmartAPIDetails.APIKey,productQuery);
 		return wsr;
 	}
 }

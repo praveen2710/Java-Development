@@ -10,7 +10,8 @@
   		<form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
 	  		<input type="text" ng-model="ctrl.searchString" id="uname" class="username form-control input-sm" placeholder="Enter your name" required/>
 		        
-		    <input type="submit"  value="Search" class="btn btn-primary btn-sm">
+		    <input type="submit"  value="Search" class="btn btn-primary btn-sm">{{ctrl.inputError}}
+		    
 		</form>                       
 		
 		<div class="panel panel-default">

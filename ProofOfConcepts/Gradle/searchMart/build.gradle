@@ -2,6 +2,8 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.akhikhl.gretty'
+//apply plugin: 'findbugs'
+apply plugin: 'jacoco'
 
 buildscript {
   repositories {
@@ -26,9 +28,30 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.13'
-    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     compile 'org.springframework:spring-webmvc:4.2.6.RELEASE'
     runtime 'javax.servlet:jstl:1.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
+	compile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
+    compile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
+
+jacoco {
+        toolVersion = "0.7.4+"
 }

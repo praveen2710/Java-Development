@@ -15,7 +15,6 @@ import com.search.externalcalls.SearchProductAPI;
 import com.searchMart.entities.ProductRecommendations;
 import com.searchMart.entities.ProductReview;
 import com.searchMart.entities.WalmartSearchResult;
-import com.searchMart.entities.testUser;
 
 
 @Controller
@@ -28,30 +27,45 @@ public class ProductSearchController {
 
     }
    
+   /**
+    * This method will search based on the product Name given. If no result was found or
+    * if the search string was empty/invalid a message must be shown to user.
+    * @param name
+    * @return
+    */
    @RequestMapping(value = "/index/search", method = RequestMethod.GET)
-   public ResponseEntity<WalmartSearchResult> getProductSearch(@RequestParam("productName") String name) {
+   public ResponseEntity<Object> getProductSearch(@RequestParam("productName") String name) {
        
 	   SearchProductAPI spAPI = new SearchProductAPI(name);
 	   
-	   WalmartSearchResult searchResult = spAPI.searchAPICall();
-	   
-	   return new ResponseEntity<WalmartSearchResult>(searchResult,HttpStatus.OK);
+	   WalmartSearchResult searchResult = null;
+	   try{
+	     searchResult = spAPI.searchAPICall();
+	   }catch(Exception e){
+		  return new ResponseEntity<Object>("Internal Server Error Occured",HttpStatus.INTERNAL_SERVER_ERROR);
+	   }
+	   return new ResponseEntity<Object>(searchResult,HttpStatus.OK);
    }
    
    @RequestMapping(value = "/index/recommendation", method = RequestMethod.GET)
-   public ResponseEntity<List<ProductRecommendations>> getProductRecommendations(@RequestParam("productId") String productId) {
+   public ResponseEntity<Object> getProductRecommendations(@RequestParam("productId") String productId) {
        
 	   ProductRecommendationAPI prAPI = new ProductRecommendationAPI(productId);
 	   
-	   List<ProductRecommendations> recommendedResult = prAPI.recommendationAPICall();
-	   
-	   for(ProductRecommendations eachProduct : recommendedResult){
-		   ReviewsAPI rewAPI = new ReviewsAPI(eachProduct.getItemId());
-		   ProductReview prReview = rewAPI.reviewAPICall();
-		   eachProduct.setProductReview(prReview);
+	   List<ProductRecommendations> recommendedResult = null;
+	   try{
+		   recommendedResult = prAPI.recommendationAPICall();
+
+		   for(ProductRecommendations eachProduct : recommendedResult){
+			   ReviewsAPI rewAPI = new ReviewsAPI(eachProduct.getItemId());
+			   ProductReview prReview = rewAPI.reviewAPICall();
+			   eachProduct.setProductReview(prReview);
+		   }
+	   }catch(Exception e){
+		   e.printStackTrace();
+		   return new ResponseEntity<Object>("Internal Server Error Occured",HttpStatus.INTERNAL_SERVER_ERROR);
 	   }
-	   	   
-	   return new ResponseEntity<List<ProductRecommendations>>(recommendedResult,HttpStatus.OK);
+	   return new ResponseEntity<Object>(recommendedResult,HttpStatus.OK);
    }
 
 }

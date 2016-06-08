@@ -11,7 +11,7 @@ import com.searchMart.entities.ProductReview;
 public class ReviewsAPITest {
 
 	@Test
-	public void testAPI() {
+	public void testReviewAPI() {
 		ReviewsAPI prReviewAPI = new ReviewsAPI("42608121");
 		
 		ProductReview a =prReviewAPI.reviewAPICall();

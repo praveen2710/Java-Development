@@ -27,10 +27,9 @@ public class ProductRecommendationAPI {
 		if(productId==null||productId.isEmpty() || productId.trim().isEmpty()){
 			throw new NullPointerException("Query string cannot be empty");
 		}
-		List<ProductRecommendations> listItems = new ArrayList<ProductRecommendations>();
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<ProductRecommendations>> responseEntity  = restTemplate.exchange("http://api.walmartlabs.com/v1/nbp?apiKey={apiKey}&itemId={itemID}", HttpMethod.GET, null, new ParameterizedTypeReference<List<ProductRecommendations>>() {
-        },WalmartAPIKey.APIKey,productId);
+		ResponseEntity<List<ProductRecommendations>> responseEntity  = restTemplate.exchange(WalmartAPIDetails.recommendationUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<ProductRecommendations>>() {
+        },WalmartAPIDetails.APIKey,productId);
 		List<ProductRecommendations> products = responseEntity.getBody();
 		return products;
 	}

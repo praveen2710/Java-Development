@@ -6,6 +6,7 @@ App.controller('UserController', ['$scope', 'UserService', function($scope, User
 	var self = this;
 	self.subuser={searchString:''};
 	self.subusers = [];
+	self.inputError = '';
 	
 	self.test = "mama"
 		
@@ -36,10 +37,12 @@ App.controller('UserController', ['$scope', 'UserService', function($scope, User
 		
    self.submit = function() {
        if(self.searchString !=null){
-           console.log('Searching for product ', self.searchString);    
+           console.log('Searching for product ', self.searchString); 
+           self.inputError = ""
            self.searchProduct(self.searchString)
        }else{
            console.log('Search String was empty')
+           self.inputError = "Search String was empty"
        }
    };
 }])
