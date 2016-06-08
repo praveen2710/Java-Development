@@ -35,5 +35,26 @@ __TODO LIST__
 * Handle http error on client side gracefully i.e 500,404,403 etc..
 * Reaserch and determine need of testing on angular code i.e Jasmine
 * Mock  json reply from third party API to make tests truly unit tests
+* 
+
+###How to use it.
+
+* Download the project searchMart specifically by using this command in the desired folder
+
+`svn export https://github.com/praveen2710/Effective_Java/trunk/ProofOfConcepts/Gradle/searchMart`
+
+* Import the folder in eclipse as a gradle project
+
+* Run the project using `gradle jettyRun`
+  Open a browser and type the url below
+*GET* :  `http://localhost:8080/searchMart/index`
+
+* API Calls
+
+Request Type |Request API| Response |
+-------------|-----------|----------|
+GET             |  http://localhost:8080/searchMart/index/search?productName='{productName}'         |     List of 10 products that match the search string     |
+GET             |  http://localhost:8080/searchMart/index/recommendation?productId='{productId}'         |   List Of recommendation with review based on product Id       |
+
 
   
