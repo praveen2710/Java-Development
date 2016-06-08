@@ -31,12 +31,12 @@ __TODO LIST__
 * ~~Implement the controller class for client side to interact with server~~
 * Read and implement testing of controller
 * Reasarch on best way to save API key
-* apply gradle plugin for code coverage and findbug
-* Verify if all necessary parts of application are on github and run it using gradle in different workspace
+* ~~apply gradle plugin for code coverage and findbug~~
+* ~~Verify if all necessary parts of application are on github and run it using gradle in different workspace~~
 * Handle http error on client side gracefully i.e 500,404,403 etc..
 * Reaserch and determine need of testing on angular code i.e Jasmine
 * Mock  json reply from third party API to make tests truly unit tests
-* 
+* Add logger and replace print stack trace.
 
 ###How to use it.
 
