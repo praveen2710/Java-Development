@@ -50,14 +50,14 @@ __TODO LIST__
   Open a browser and type the url below
 *GET* :  `http://localhost:8080/searchMart/index`
 
-* API Calls
+### API Calls
 
 Request Type |Request API| Response |
 -------------|-----------|----------|
 GET             |  http://localhost:8080/searchMart/index/search?productName='{productName}'         |     List of 10 products that match the search string     |
 GET             |  http://localhost:8080/searchMart/index/recommendation?productId='{productId}'         |   List Of recommendation with review based on product Id       |
 
-* Extra's
+### Extra's & Troubleshoot
   1. You can run `gradle jacocoTestReport` and go to `build/jacocoHtml/index.html` to view the code coverage report.
   2. You can view the unit test results by going to  `build/reports/tests/index.html`
-  
+  3. If there are dependency issue's run `gradle eclipse` and refresh project to resolve the issue
