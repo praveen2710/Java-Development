@@ -61,3 +61,10 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
   1. You can run `gradle jacocoTestReport` and go to `build/jacocoHtml/index.html` to view the code coverage report.
   2. You can view the unit test results by going to  `build/reports/tests/index.html`
   3. If there are dependency issue's run `gradle eclipse` and refresh project to resolve the issue
+
+### Good To Have
+ 1. A front end functionality to disable submit until 3 letters are typed.
+ 2. Learn and implement functionality for @Autowired and @Submit
+ 3. Improve error handling from the current implementation
+ 4. Create a mockJson and implement it to make test's independent of API
+ 5. On front end move products with no review to bottom.
