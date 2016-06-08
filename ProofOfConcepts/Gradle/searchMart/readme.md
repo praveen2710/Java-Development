@@ -17,7 +17,8 @@ __Tools and Application Used__
 3. Angular
 4. FindBugs
 5. gretty
-
+6. Jacoco
+7. findbugs (currently disable as it is not compatible with java 8)
 
 __TODO LIST__
 
@@ -56,5 +57,7 @@ Request Type |Request API| Response |
 GET             |  http://localhost:8080/searchMart/index/search?productName='{productName}'         |     List of 10 products that match the search string     |
 GET             |  http://localhost:8080/searchMart/index/recommendation?productId='{productId}'         |   List Of recommendation with review based on product Id       |
 
-
+* Extra's
+  1. You can run `gradle jacocoTestReport` and go to `build/jacocoHtml/index.html` to view the code coverage report.
+  2. You can view the unit test results by going to  `build/reports/tests/index.html`
   
