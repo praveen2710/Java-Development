@@ -68,3 +68,4 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
  3. Improve error handling from the current implementation
  4. Create a mockJson and implement it to make test's independent of API
  5. On front end move products with no review to bottom.
+ 6. Look into adding functionality where the recommendation can be dynamic based on the product selected from retrieved result and not onlt the top products recommendation.
