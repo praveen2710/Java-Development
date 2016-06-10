@@ -15,14 +15,10 @@ buildscript {
   }
 }
 
-// JDK 7
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 gretty {
   port = 8080
   contextPath = 'searchMart'
-  servletContainer = 'jetty9'
+  servletContainer = 'jetty8'
 }
 
 repositories {
