@@ -25,18 +25,18 @@ __TODO LIST__
 * ~~Brainstorm on how to implement solution ie. MVC,SPA,EJB,JPA etc.  etc...~~
 * ~~Create  a desing document to define how to handle workflow and decide functionality allocation~~
 * ~~Investigate on how to convert JSON to pojo quickly and efficiently~~
-* ~~Do a quick read on angular and implement client side code
+* ~~Do a quick read on angular and implement client side code~~
 * ~~implement API classes to retrieve result from API on requests~~
 * ~~Write unit test for different scenarios for API class~~
 * ~~Implement the controller class for client side to interact with server~~
-* ~~Read and implement testing of controller
-* ~~Reasarch on best way to save API key
+* ~~Read and implement testing of controller~~
+* ~~Reasarch on best way to save API key~~
 * ~~apply gradle plugin for code coverage and findbug~~
 * ~~Verify if all necessary parts of application are on github and run it using gradle in different workspace~~
-* ~~Handle http error on client side gracefully i.e 500,404,403 etc..~
+* ~~Handle http error on client side gracefully i.e 500,404,403 etc..~~
 * Reaserch and determine need of testing on angular code i.e Jasmine
 * Mock  json reply from third party API to make tests truly unit tests
-* ~~Add logger and replace print stack trace.
+* ~~Add logger and replace print stack trace.~~
 
 ###How to use it.
 
@@ -70,3 +70,31 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
  5. On front end move products with no review to bottom.
  6. Look into adding functionality where the recommendation can be dynamic based on the product selected from retrieved result and not onlt the top products recommendation.
  7. Add retry logic in angular
+ 8. 
+
+###Overview Of Solution
+
+####Backend
+1. After brainstorming on how to implement this I went ahaead with having a Angular Clinet side and Spring MVC server side implementation . The reason I did not go ahead with SPA was because my API Key would be exposed which was not something I felt was a good design decision . I am using jetty as my webserver . 
+
+2. I have used jacoco as code coverage and used log4j as my logging framework. 
+  * Static anaylsis reports can be found at `build/jacocoHtml/index.html`
+  * junit test outputs can be found at `build/reports/tests/index.html`
+  * logs can be found at `logs/app.log`
+
+3. I have used `@controllerAdvice` pattern to optimize my exception handling . This avoids the messy multi layer try catch block.
+
+4. I also used `restTemplate` to make http calls and made uses of jackson binding to map incoming json to POJO and vice versa.
+
+5.I also added `findbugs` but there seems to be compatibilty issue with Java 8 where build fails if it is enabled all the time.If needed once can remove comments on findbugs in gradle and run it temporarely.
+
+####Front End
+
+I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations responsibilty to angular since it seemed to do reduce some load on server easily 
+
+####Issue & Assumptions.
+I was consistly seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
+
+I added findbugs but it has compatibilty with java 8. Need to find a solution or alternative later.
+
+I have used *avgUserRating* as 'review sentiment' described in the requirements.
