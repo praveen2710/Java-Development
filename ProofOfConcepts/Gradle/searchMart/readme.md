@@ -31,6 +31,7 @@ __Tools and Application Used__
 4. gretty
 5. Jacoco
 6. findbugs
+
 __TODO LIST__
 
 * ~~Brainstorm on how to implement solution ie. MVC,SPA,EJB,JPA etc.  etc...~~
@@ -58,10 +59,12 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
 
 ###Overview Of Solution
 
+design doc : [designdoc.png](https://github.com/praveen2710/Effective_Java/blob/master/ProofOfConcepts/Gradle/searchMart/designdoc.png)
+
 ####Backend
 1. After brainstorming on how to implement this I went ahaead with having a Angular Clinet side and Spring MVC server side implementation . The reason I did not go ahead with SPA was because my API Key would be exposed which was not something I felt was a good design decision . I am using jetty as my webserver . 
 
-2. I have used jacoco as code coverage and used log4j as my logging framework. 
+2. I have used jacoco for code coverage ,log4j as my logging framework and findbugs for static analysis
   * junit test outputs can be found at `build/reports/tests/index.html` after running `gradle buile`
   * code coverage reports can be found at `build/jacocoHtml/index.html` after running `gradle jacocoTestReport` 
   * logs can be found at `logs/app.log`
@@ -77,12 +80,10 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
 
 I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations functionality to angular since it seemed to do reduce some load on server easily .
 
-Added a few funtionality like retry logic,min 2 letter search and inform user if the search fails and give appropriate reason.
+Added a few funtionality like retry logic,min 2 letter in search box and inform user if the search fails and give appropriate reason.
 
 ###Issue & Assumptions.
-I was consistly seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
-
-I added findbugs but it has compatibilty with java 8. Need to find a solution or alternative later.
+I was seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
 
 I have used *avgUserRating* as __review sentiment__ described in the requirements.
 
