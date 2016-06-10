@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.akhikhl.gretty'
-//apply plugin: 'findbugs'
+apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 
 buildscript {
@@ -60,3 +60,6 @@ jacoco {
         toolVersion = "0.7.4+"
 }
 
+findbugs {
+   ignoreFailures = true
+}
