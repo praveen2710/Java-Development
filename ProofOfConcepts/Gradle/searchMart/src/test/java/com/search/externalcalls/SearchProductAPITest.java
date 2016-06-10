@@ -12,8 +12,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import com.searchMart.entities.Items;
 import com.searchMart.entities.WalmartSearchResult;
 
-import junit.framework.TestCase;
-
 /**
  * Will be Testing to mimic scenario such as 
  * 1)Happy path where the url has correct query string
@@ -91,7 +89,6 @@ public class SearchProductAPITest{
 		System.out.println("In Bad API test API = "+WalmartAPIDetails.APIKey);
 		
 		exception.expect(HttpClientErrorException.class);
-//		exception.expect(hasProperty("response", hasProperty("status", is(403))));
 		WalmartSearchResult wsp  = spi.searchAPICall();
 		
 		System.out.println(wsp.toString());

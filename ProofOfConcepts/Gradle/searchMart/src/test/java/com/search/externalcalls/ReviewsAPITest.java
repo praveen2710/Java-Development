@@ -1,22 +1,46 @@
 package com.search.externalcalls;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.searchMart.entities.ProductReview;
 
 public class ReviewsAPITest {
 
+	@Rule
+	public final ExpectedException exception = ExpectedException.none();
+
 	@Test
 	public void testReviewAPI() {
 		ReviewsAPI prReviewAPI = new ReviewsAPI("42608121");
 		
-		ProductReview a =prReviewAPI.reviewAPICall();
-		System.out.println(a.toString());
-		System.out.println(a.getReviewStatistics().getAverageOverallRating());
+		ProductReview pr =prReviewAPI.reviewAPICall();
+		System.out.println(pr.toString());
+		System.out.println(pr.getReviewStatistics().getAverageOverallRating());
+	} 
+	
+	@Test
+	public void testReviewAPIEmptyId() {
+		ReviewsAPI prReviewAPI = new ReviewsAPI("");
+		
+		exception.expect(NullPointerException.class);
+		ProductReview prEmpty =prReviewAPI.reviewAPICall();
+		
+		System.out.println(prEmpty.toString());
+
+	} 
+	
+	@Test
+	public void testReviewAPIBadRequest() {
+		ReviewsAPI prReviewAPI = new ReviewsAPI("aasd");
+		
+		exception.expect(HttpClientErrorException.class);
+		ProductReview prEmpty =prReviewAPI.reviewAPICall();
+		
+		System.out.println(prEmpty.toString());
+
 	} 
 		
 }

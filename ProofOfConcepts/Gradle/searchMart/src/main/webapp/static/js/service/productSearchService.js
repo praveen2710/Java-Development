@@ -5,41 +5,34 @@ App.factory('UserService', ['$http', '$q', function($http, $q){
 	
 	return{
 		searchProduct: function(searchString){
-			console.log("in search product function")
-			console.log(searchString)
 			
 			return $http.get('http://localhost:8080/searchMart/index/search?productName='+searchString)
 						//the .then has two parts in it valid,error response
 						.then(
 								//the response has status,data,headers,config,statusText 
 								function(response){
-									console.log("came in sucess")
-									console.log(response)
+									console.log("retrieved search result succesfully")
 									return response.data
 								},
 								function(errResponse){
-									console.error("Error wile creating user")
-									console.log(errResponse)
+									console.error("Error wile retrieving product")
 									return $q.reject(errResponse)
 								}	
 								
 						);
 		},
 		getRecommendations : function(productId){
-			console.log("came in recommendations to make call")
 			
 			return $http.get('http://localhost:8080/searchMart/index/recommendation?productId='+productId)
 			//the .then has two parts in it valid,error response
 			.then(
 					//the response has status,data,headers,config,statusText 
 					function(response){
-						console.log("came in sucess for recommendation")
-						console.log(response.data)	
+						console.log("retrieved recommendations succesfully")
 						return response.data
 					},
 					function(errResponse){
-						console.error("Error wile creating user")
-						console.log(errResponse)
+						console.error("Error wile retrieving recommendation")
 						return $q.reject(errResponse)
 					}	
 					

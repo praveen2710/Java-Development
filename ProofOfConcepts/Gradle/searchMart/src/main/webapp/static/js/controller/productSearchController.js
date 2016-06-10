@@ -6,44 +6,69 @@ App.controller('UserController', ['$scope', 'UserService', function($scope, User
 	var self = this;
 	self.subuser={searchString:''};
 	self.subusers = [];
-	self.inputError = '';
-	
-	self.test = "mama"
-		
-	console.log("controler called in")
+	self.errorResp = '';
+	self.retryCount = 0;
+	self.maxCount = 10;
 	
    self.searchProduct = function(productName){
-		UserService.searchProduct(productName).then(function(resp){
-			console.log("came in controller")
-			self.searchResult = resp.items
-			console.log(self.searchResult)
-			console.log(self.searchResult[0].itemId)
-			if(self.searchResult[0].itemId!=null){
-				self.getRecommendations(self.searchResult[0].itemId)
-			}
-		})
+		UserService.searchProduct(productName).then(
+			function(resp){
+				self.retryCount = 0;
+				
+				self.searchResult = resp.items
+				if(self.searchResult[0].itemId!=null){
+					self.getRecommendations(self.searchResult[0].itemId)
+				}
+				self.errorResp = ""
+			},function(errResponse){
+//				Logic to enable retries before giving up
+				self.retryCount = self.retryCount + 1
+				if(self.retryCount < self.maxCount){
+					self.searchProduct(self.searchString)
+				}else{
+					self.dispError(errResponse)
+				}
+			})
 		         
 	}
-	
+		
 	self.getRecommendations= function(productId){
-		console.log("call service to get recommendations")
-		console.log(productId)
-		UserService.getRecommendations(productId).then(function (recProd){
-			console.log("came in recomendation controller")
-			self.recommededResults = recProd
-			console.log(self.recommededResults)
-		})
+		UserService.getRecommendations(productId).then(
+			function (recProd){
+				self.errorResp = ""
+				self.retryCount = 0
+					
+				self.recommededResults = recProd
+			},
+			function(errResponse){
+//				Logic to enable retries before giving up
+				self.retryCount = self.retryCount + 1
+				console.error("retried "+ self.retryCount)
+				if(self.retryCount < self.maxCount){
+					self.getRecommendations(self.searchResult[0].itemId)
+				}else{
+					self.dispError(errResponse)
+				}
+			})
 	}
 		
    self.submit = function() {
+//	   angular ensure no null string will be passed but defensive programming
        if(self.searchString !=null){
-           console.log('Searching for product ', self.searchString); 
-           self.inputError = ""
+           self.searchResult = ""
+           self.recommededResults = ""   
            self.searchProduct(self.searchString)
-       }else{
-           console.log('Search String was empty')
-           self.inputError = "Search String was empty"
        }
    };
+   
+	self.dispError = function(errResponse){
+		if(errResponse.status == 403){
+			self.errorResp = "Access was forbidden please contact admin"
+		}else if(errResponse.status == 400){
+			self.errorResp = "Bad request occured please contact admin"
+		}else{
+			self.errorResp = "Something unexpected occured contact admin"
+		}
+	}
 }])
 

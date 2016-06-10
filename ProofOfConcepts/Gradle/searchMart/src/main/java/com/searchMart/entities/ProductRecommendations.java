@@ -1,10 +1,10 @@
 package com.searchMart.entities;
 
-import com.search.externalcalls.SearchProductAPI;
+import com.search.externalcalls.ProductRecommendationAPI;
 
 /**
  * This will be the POJO that stores the retrieved result from 
- * the {@link ProductRecommendations} class.
+ * the {@link ProductRecommendationAPI} .
  * 
  * All variable types are String for now.
  * @author praveen
