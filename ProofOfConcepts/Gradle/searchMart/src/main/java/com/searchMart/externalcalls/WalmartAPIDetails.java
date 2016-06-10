@@ -1,4 +1,4 @@
-package com.search.externalcalls;
+package com.searchMart.externalcalls;
 
 /**
  * This is a static class to initialize the URL and API key to be used

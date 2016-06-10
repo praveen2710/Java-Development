@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.search.externalcalls.ProductRecommendationAPI;
-import com.search.externalcalls.ReviewsAPI;
-import com.search.externalcalls.SearchProductAPI;
 import com.searchMart.entities.ProductRecommendations;
 import com.searchMart.entities.ProductReview;
 import com.searchMart.entities.WalmartSearchResult;
+import com.searchMart.externalcalls.ProductRecommendationAPI;
+import com.searchMart.externalcalls.ReviewsAPI;
+import com.searchMart.externalcalls.SearchProductAPI;
 
 /**
  * The controller class where all request for product search and recommendation
@@ -29,7 +29,7 @@ public class ProductSearchController {
    @RequestMapping(value = "/index")
     public void index()
     {
-
+	   
     }
    
    /**

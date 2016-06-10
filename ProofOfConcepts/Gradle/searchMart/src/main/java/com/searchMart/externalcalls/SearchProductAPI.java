@@ -1,4 +1,4 @@
-package com.search.externalcalls;
+package com.searchMart.externalcalls;
 
 import org.springframework.web.client.RestTemplate;
 

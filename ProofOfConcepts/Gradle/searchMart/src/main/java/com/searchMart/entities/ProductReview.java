@@ -1,6 +1,6 @@
 package com.searchMart.entities;
 
-import com.search.externalcalls.ReviewsAPI;
+import com.searchMart.externalcalls.ReviewsAPI;
 
 /**
  * This is the main POJO to store response

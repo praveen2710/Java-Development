@@ -1,6 +1,6 @@
 package com.searchMart.entities;
 
-import com.search.externalcalls.ProductRecommendationAPI;
+import com.searchMart.externalcalls.ProductRecommendationAPI;
 
 /**
  * This will be the POJO that stores the retrieved result from 
