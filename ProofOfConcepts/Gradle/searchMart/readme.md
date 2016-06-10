@@ -14,23 +14,26 @@ __Acceptance Criteria__:
 
 `svn export https://github.com/praveen2710/Effective_Java/trunk/ProofOfConcepts/Gradle/searchMart`
 
-* next type `cd searchMart`   
+* next type `cd searchMart/` in command line   
 
 * Run the project using `gradle jettyRun`
   Open a browser and type the url below
-*GET* :  `http://localhost:8080/searchMart/index`
+  `http://localhost:8080/searchMart/index`
 
 * Type in product name you want to search
   
 
 __Tools and Application Used__
 
-1. Spring MVC
-2. Gradle
-3. Angular
-4. gretty
-5. Jacoco
-6. findbugs
+1. **Spring MVC** - web application framework
+2. **Gradle** - build automation tool
+3. **Angular** - front end
+4. **gretty** - web server 
+5. **Jacoco** - code coverge tool
+6. **findbugs** - static anaylsis tool
+7. **restTemplate** - template to make http calls 
+8. **controllerAdvice** - exception Handling
+9. **log4j** - logging framework
 
 __TODO LIST__
 
@@ -65,22 +68,21 @@ design doc : [designdoc.png](https://github.com/praveen2710/Effective_Java/blob/
 1. After brainstorming on how to implement this I went ahaead with having a Angular Clinet side and Spring MVC server side implementation . The reason I did not go ahead with SPA was because my API Key would be exposed which was not something I felt was a good design decision . I am using jetty as my webserver . 
 
 2. I have used jacoco for code coverage ,log4j as my logging framework and findbugs for static analysis
-  * junit test outputs can be found at `build/reports/tests/index.html` after running `gradle buile`
+  * junit test outputs can be found at `build/reports/tests/index.html` and static anaysis reports can be found at `build/reports/findbugs/main.html` after running `gradle build`
   * code coverage reports can be found at `build/jacocoHtml/index.html` after running `gradle jacocoTestReport` 
   * logs can be found at `logs/app.log`
-  * static anaysis reports can be found at `build/reports/findbugs/main.html` after running `gradle findbugsMain`
   
-3. I have used `@controllerAdvice` pattern to optimize my exception handling . This avoids the messy multi layer try catch block.
+3. I have used `@controllerAdvice` pattern to optimize my exception handling . This avoids the messy multi try catch block.
 
 4. I also used `restTemplate` to make http calls and made uses of jackson binding to map incoming json to POJO and vice versa.
 
-5. I also added `findbugs` and some of the ones reported I need to investigate best approach to fix.
+5. I also added `findbugs` and I need to find a good way to resolve some of the issue pointed by it
 
 ####Front End
 
-I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations functionality to angular since it seemed to do reduce some load on server easily .
+I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations functionality to angular since it seemed to do reduce some load on server and balance it to a true server side and client side implementation . Not unlike client - server side implementation where client is a dummy terminal.
 
-Added a few funtionality like retry logic,min 2 letter in search box and inform user if the search fails and give appropriate reason.
+Added a few funtionality like retry logic,min 2 letter in search box,sorting and inform user if the search fails and give appropriate reason.
 
 ###Issue & Assumptions.
 I was seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
@@ -89,11 +91,14 @@ I have used *avgUserRating* as __review sentiment__ described in the requirement
 
 ### My Experience
 
-I enjoyed working on it. Making something that is testable,modular,stable and reusable with using a lot of existing tools was pretty fun. In future I would like to add `splunk` and `jenkins` to accomodate for CI and central logging.I also got to learn a lot of new things and was able to use latest and greatest there was to offer. My grip of gradle got better and also learned about an awsome way to handle exception in spring MVC .There is a lot to learn still but this is a good start.
+I throughly enjoyed working on this. It reminded me of college days but also made me realize how much I have changed. Having something that somehow works for now  before due date is no more enough. I was looking to build something that was maintainable, testable and modular and this ignited my curiosity to find and use many tools to help me achieve that.I have also moved away from "code first think later" to "think functionally first then we can code" approach which to be honest I was specitical in beginning . But it works I can seprate functionality and my code is modular enough to be flexible.
+
+Doing this in span of a week with balancing my work was quite exhilirating. I am in future thinking of improving it more by adding `splunk`,`jenkins` and any other things I find and hopefully make this a example template for a good web application.
+
 
 ### Extra's & Troubleshoot
   1. You can run `gradle jacocoTestReport` and go to `build/jacocoHtml/index.html` to view the code coverage report.
-  2. You can view the unit test results by going to  `build/reports/tests/index.html`
+  2. You can view run `gradle build` and view the unit test results by going to  `build/reports/tests/index.html`
   3. If there are dependency issue's run `gradle eclipse` and refresh project to resolve the issue
 
 ### Good To Have
