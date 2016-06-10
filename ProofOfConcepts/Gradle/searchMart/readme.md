@@ -44,11 +44,13 @@ __TODO LIST__
 
 `svn export https://github.com/praveen2710/Effective_Java/trunk/ProofOfConcepts/Gradle/searchMart`
 
-* Import the folder in eclipse as a gradle project
+* next type `cd searchMart`   
 
 * Run the project using `gradle jettyRun`
   Open a browser and type the url below
 *GET* :  `http://localhost:8080/searchMart/index`
+
+* Type in product name you want to search
 
 ### API Calls
 
@@ -90,7 +92,9 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
 
 ####Front End
 
-I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations responsibilty to angular since it seemed to do reduce some load on server easily 
+I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations responsibilty to angular since it seemed to do reduce some load on server easily .
+
+Added a few funtionality like retry logic,min 2 letter search and inform user if the search fails and give appropriate reason.
 
 ####Issue & Assumptions.
 I was consistly seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
