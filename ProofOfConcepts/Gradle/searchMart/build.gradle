@@ -35,6 +35,10 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
 	compile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
     compile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.6'
+ 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.6'
+ 	compile group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.6'
+ 	compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.6'
 }
 
 tasks.withType(FindBugs) {
@@ -55,3 +59,4 @@ jacocoTestReport {
 jacoco {
         toolVersion = "0.7.4+"
 }
+
