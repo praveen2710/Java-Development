@@ -1,4 +1,4 @@
-package com.search.externalcalls;
+package com.searchMart.externalcalls;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.searchMart.entities.ProductRecommendations;
+import com.searchMart.externalcalls.ProductRecommendationAPI;
 
 public class ProductRecommendationAPITest {
 	

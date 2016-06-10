@@ -1,4 +1,4 @@
-package com.search.externalcalls;
+package com.searchMart.externalcalls;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -11,6 +11,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.searchMart.entities.Items;
 import com.searchMart.entities.WalmartSearchResult;
+import com.searchMart.externalcalls.SearchProductAPI;
+import com.searchMart.externalcalls.WalmartAPIDetails;
 
 /**
  * Will be Testing to mimic scenario such as 

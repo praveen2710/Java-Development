@@ -1,4 +1,4 @@
-package com.search.externalcalls;
+package com.searchMart.externalcalls;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.searchMart.entities.ProductReview;
+import com.searchMart.externalcalls.ReviewsAPI;
 
 public class ReviewsAPITest {
 
