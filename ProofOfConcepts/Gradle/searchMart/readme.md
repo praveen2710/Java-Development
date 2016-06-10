@@ -30,8 +30,7 @@ __Tools and Application Used__
 3. Angular
 4. gretty
 5. Jacoco
-6. findbugs (currently disable as it is not compatible with java 8)
-
+6. findbugs
 __TODO LIST__
 
 * ~~Brainstorm on how to implement solution ie. MVC,SPA,EJB,JPA etc.  etc...~~
@@ -64,14 +63,15 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
 
 2. I have used jacoco as code coverage and used log4j as my logging framework. 
   * junit test outputs can be found at `build/reports/tests/index.html` after running `gradle buile`
-  * Static anaylsis reports can be found at `build/jacocoHtml/index.html` after running `gradle jacocoTestReport` 
+  * code coverage reports can be found at `build/jacocoHtml/index.html` after running `gradle jacocoTestReport` 
   * logs can be found at `logs/app.log`
-
+  * static anaysis reports can be found at `build/reports/findbugs/main.html` after running `gradle findbugsMain`
+  
 3. I have used `@controllerAdvice` pattern to optimize my exception handling . This avoids the messy multi layer try catch block.
 
 4. I also used `restTemplate` to make http calls and made uses of jackson binding to map incoming json to POJO and vice versa.
 
-5.I also added `findbugs` but there seems to be compatibilty issue with Java 8 where build fails if it is enabled all the time.If needed once can remove comments on findbugs in gradle and run it temporarely.
+5. I also added `findbugs` and some of the ones reported I need to investigate best approach to fix.
 
 ####Front End
 
