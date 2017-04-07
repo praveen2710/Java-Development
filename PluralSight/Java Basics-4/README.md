@@ -7,7 +7,9 @@ What are different ways to use them.Where to use them.
 * Real life use case for generics
 
 #### classesandinterfaces
-* Class implementing an interface
+* Class implementing comparator interface
 * Class with generic type paramter
 * Class extending comparable interface
 
+#### methods
+* example of using generic method to make calls to it type safe
