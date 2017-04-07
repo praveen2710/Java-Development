@@ -5,3 +5,9 @@ What are different ways to use them.Where to use them.
 ## Contents
 ### whatandwhy
 * Real life use case for generics
+
+#### classesandinterfaces
+* Class implementing an interface
+* Class with generic type paramter
+* Class extending comparable interface
+
