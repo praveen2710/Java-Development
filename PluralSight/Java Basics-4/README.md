@@ -13,3 +13,8 @@ What are different ways to use them.Where to use them.
 
 #### methods
 * example of using generic method to make calls to it type safe
+
+#### wildcards
+* upperbound
+* lowerbound
+* unbound
