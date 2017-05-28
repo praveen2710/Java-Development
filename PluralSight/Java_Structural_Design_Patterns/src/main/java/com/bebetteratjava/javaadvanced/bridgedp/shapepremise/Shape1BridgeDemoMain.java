@@ -1,6 +1,6 @@
 package com.bebetteratjava.javaadvanced.bridgedp.shapepremise;
 
-public class Shape1BridgeDemo {
+public class Shape1BridgeDemoMain {
 
 	public static void main(String args[]) {
 
