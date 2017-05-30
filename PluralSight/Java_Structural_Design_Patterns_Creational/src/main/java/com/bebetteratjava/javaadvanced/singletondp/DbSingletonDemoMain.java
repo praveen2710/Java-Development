@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DbSingletonDemo {
+public class DbSingletonDemoMain {
 
 	public static void main (String arg []) {
 		
