@@ -1,4 +1,4 @@
-package com.bebetteratjava.javaadvanced.chainofresponsibility;
+package com.bebetteratjava.javaadvanced.chainofresponsibilitydp;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;

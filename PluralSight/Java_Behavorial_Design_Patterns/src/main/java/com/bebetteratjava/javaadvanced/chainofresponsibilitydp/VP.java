@@ -1,4 +1,4 @@
-package com.bebetteratjava.javaadvanced.chainofresponsibility;
+package com.bebetteratjava.javaadvanced.chainofresponsibilitydp;
 
 public class VP extends Handler {
 
