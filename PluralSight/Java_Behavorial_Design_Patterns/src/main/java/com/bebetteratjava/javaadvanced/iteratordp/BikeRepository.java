@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 //we need to implement iterable interface to iterate over the object
 public class BikeRepository implements Iterable<String> {
-	
+
 	private String [] bikes;
 	private int index;
 	
@@ -20,7 +20,7 @@ public class BikeRepository implements Iterable<String> {
 			bikes = largerBikes;
 			largerBikes = null;
 		}
-		
+
 		bikes[index] = bike;
 		index++;
 	}
@@ -30,7 +30,7 @@ public class BikeRepository implements Iterable<String> {
 		Iterator<String> it = new Iterator<String>() {
 
 			private int currentIndex = 0;
-			
+
 			@Override
 			public boolean hasNext() {
 				return currentIndex < bikes.length && bikes[currentIndex] != null;
@@ -45,9 +45,9 @@ public class BikeRepository implements Iterable<String> {
 			public void remove() {
 				throw new UnsupportedOperationException();
 			}
-			
+
 		};
-		
+
 		return it;
 	}
 }

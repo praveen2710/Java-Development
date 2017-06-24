@@ -1,6 +1,10 @@
 package com.bebetteratjava.javaadvanced.iteratordp;
 
+import javax.management.AttributeList;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class IteratorDemoMain {
 
@@ -21,5 +25,12 @@ public class IteratorDemoMain {
 		for (String bike : repo) {
 			System.out.println(bike);
 		}
+
+		List example = new ArrayList();
+		//this  iterator that is bi-directional
+		ListIterator a = example.listIterator();
+		a.hasPrevious();
+		a.previous();
+
 	}
 }
