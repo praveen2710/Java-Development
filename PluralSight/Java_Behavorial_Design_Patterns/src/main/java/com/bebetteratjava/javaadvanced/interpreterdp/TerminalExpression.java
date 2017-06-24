@@ -2,7 +2,9 @@ package com.bebetteratjava.javaadvanced.interpreterdp;
 
 import java.util.StringTokenizer;
 
-//terminal expression
+/**
+ * This is a terminal expression that does evaluation
+ */
 public class TerminalExpression implements Expression {
 
 	private String data;

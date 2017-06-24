@@ -1,5 +1,8 @@
 package com.bebetteratjava.javaadvanced.interpreterdp;
 
+/**
+ * non terminal expression that will be iterated until it breaks to terminal expression
+ */
 public class AndExpression implements Expression {
 
 	private Expression expr1 = null;

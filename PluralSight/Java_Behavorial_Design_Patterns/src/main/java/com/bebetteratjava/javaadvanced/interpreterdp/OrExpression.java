@@ -1,6 +1,9 @@
 package com.bebetteratjava.javaadvanced.interpreterdp;
 
-//non terminal expression that will be iterated until it breaks to terminal expression
+/**
+ * non terminal expression that will be iterated until it breaks to terminal expression
+ */
+
 public class OrExpression implements Expression {
 
 	private Expression expr1 = null;
