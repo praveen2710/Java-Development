@@ -3,18 +3,24 @@ package com.bebetteratjava.javaadvanced.observordp;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ObserverDefaultDemoMain {
+/**
+ * This is standalone example to show the
+ * default java implementation of Observer pattern.
+ * This has a few shortcoming that we will fix in
+ * our other example.
+ */
+public class ObserverJavaDefaultDemoMain {
 
 	public static void main(String args[]) {
 		TwitterStream messageStream = new TwitterStream();
-		
+
 		Client client1 = new Client("Bryan");
-		
+
 		Client client2 = new Client("Mark");
-		
+
 		messageStream.addObserver(client1);
 		messageStream.addObserver(client2);
-		
+
 		messageStream.someoneTweeted();
 	}
 }

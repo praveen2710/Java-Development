@@ -1,5 +1,6 @@
 package com.bebetteratjava.javaadvanced.observordp;
 
+//concrete observer
 public class TabletClient extends Observer {
 
 	public TabletClient (Subject subject) {
@@ -8,6 +9,7 @@ public class TabletClient extends Observer {
 	}
 	
 	public void addMessage(String message) {
+		//we are setting state of subject in here.
 		subject.setState(message + " - sent from tablet");
 	}
 	

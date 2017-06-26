@@ -3,6 +3,7 @@ package com.bebetteratjava.javaadvanced.observordp;
 import java.util.ArrayList;
 import java.util.List;
 
+//subject
 public abstract class Subject {
 
 	private List<Observer> observers = new ArrayList<>();
