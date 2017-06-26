@@ -1,7 +1,9 @@
-package com.bebetteratjava.javaadvanced.mometodp;
+package com.bebetteratjava.javaadvanced.mementodp;
+
+import java.io.Serializable;
 
 //originator
-public class Employee {
+public class Employee{
 	
 	private String name;
 	private String address;
@@ -38,7 +40,7 @@ public class Employee {
 	public EmployeeMemento save() {
 		return new EmployeeMemento(name, phone);
 	}
-	
+
 	public void revert(EmployeeMemento emp) {
 		this.name = emp.getName();
 		this.phone = emp.getPhone();

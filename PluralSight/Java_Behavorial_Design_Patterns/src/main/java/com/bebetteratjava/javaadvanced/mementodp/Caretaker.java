@@ -1,4 +1,4 @@
-package com.bebetteratjava.javaadvanced.mometodp;
+package com.bebetteratjava.javaadvanced.mementodp;
 
 import java.util.Stack;
 
