@@ -1,5 +1,6 @@
 package com.bebetteratjava.javaadvanced.statedp;
 
+//state
 public abstract class State {
 	
 	public void handleRequest() {

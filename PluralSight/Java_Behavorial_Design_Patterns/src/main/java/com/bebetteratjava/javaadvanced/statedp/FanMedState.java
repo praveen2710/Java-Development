@@ -1,5 +1,6 @@
 package com.bebetteratjava.javaadvanced.statedp;
 
+//concrete state
 public class FanMedState extends State {
 
 	private Fan fan;

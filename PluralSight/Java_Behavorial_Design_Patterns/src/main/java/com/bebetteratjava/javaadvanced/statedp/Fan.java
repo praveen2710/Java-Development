@@ -1,5 +1,6 @@
 package com.bebetteratjava.javaadvanced.statedp;
 
+//context
 public class Fan {
 
 	State fanOffState;
