@@ -8,7 +8,7 @@ __Acceptance Criteria__:
   3. Retrieve reviews of the first 10 product recommendations
   4. Rank order the recommended products based upon the review sentiments
 
-###How to use it.
+### How to use it.
 
 * Download the project searchMart specifically by using this command in the desired folder
 
@@ -64,7 +64,7 @@ GET             |  http://localhost:8080/searchMart/index/recommendation?product
 
 design doc : [designdoc.png](https://github.com/praveen2710/Effective_Java/blob/master/ProofOfConcepts/Gradle/searchMart/designdoc.png)
 
-####Backend
+#### Backend
 1. After brainstorming on how to implement this I went ahaead with having a Angular Clinet side and Spring MVC server side implementation . The reason I did not go ahead with SPA was because my API Key would be exposed which was not something I felt was a good design decision . I am using jetty as my webserver . 
 
 2. I have used jacoco for code coverage ,log4j as my logging framework and findbugs for static analysis
@@ -78,13 +78,13 @@ design doc : [designdoc.png](https://github.com/praveen2710/Effective_Java/blob/
 
 5. I also added `findbugs` and I need to find a good way to resolve some of the issue pointed by it
 
-####Front End
+#### Front End
 
 I used angular in front end as it uses module making code maitenance very easy. I also handed over the sorting of recommendations functionality to angular since it seemed to do reduce some load on server and balance it to a true server side and client side implementation . Not unlike client - server side implementation where client is a dummy terminal.
 
 Added a few funtionality like retry logic,min 2 letter in search box,sorting and inform user if the search fails and give appropriate reason.
 
-###Issue & Assumptions.
+### Issue & Assumptions.
 I was seeing some issue with review API where it would give `access forbidden error` out of blue. As of now I have added retry logic to handle that. I assume that maybe there is some kind of limiter.This does not happen everytime but sometimes only. My intial investigation was only able to determine that I was getting a `403` status code back.Need to look into it more deeply later on
 
 I have used *avgUserRating* as __review sentiment__ described in the requirements.
